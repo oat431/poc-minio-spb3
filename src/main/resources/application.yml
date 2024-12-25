@@ -1,0 +1,58 @@
+spring:
+  profiles:
+    active: dev
+  application:
+    name: poc-minio-spb3
+  devtools:
+    livereload:
+      enabled: false
+  threads:
+    virtual:
+      enabled: true
+  datasource:
+    url: jdbc:postgresql://localhost:5432/db_poc_minio_v1?sslmode=disable&connect_timeout=10&client_encoding=UTF8
+    username: postgres
+    password: postgres
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    hibernate:
+      ddl-auto: update
+    database: postgresql
+    open-in-view: false
+  servlet:
+    multipart:
+      max-file-size: 80MB
+  output:
+    ansi:
+      enabled: always
+
+springdoc:
+  api-docs:
+    path: /api-docs
+  swagger-ui:
+    path: /swagger-ui
+    syntax-highlight:
+      theme: monokai
+      activated: true
+    try-it-out-enabled: true
+    tags-sorter: alpha
+    filter: true
+
+server:
+  #  port: 8443
+  port: 8081
+
+logging:
+  level:
+    root: WARN
+    org.spring.springframework.web: DEBUG
+    com.application: DEBUG
+    panomete.pocminsb.*: DEBUG
+    org.hibernate: ERROR
+  pattern:
+    console: "%clr(%d{${LOG_DATEFORMAT_PATTERN:yyyy-MM-dd HH:mm:ss.SSS Z}}){magenta} |  %clr(${LOG_LEVEL_PATTERN:%-5p}) | %clr(%-40.40logger{39}){cyan} | %clr(%-25.25M){yellow} | %m%n${LOG_EXCEPTION_CONVERSION_WORD:%wEx}"
+
+minio:
+  host: http://localhost:9000
+  access-key: tnlNFqypgJGKzOA5Wxzd
+  secret-key: mfCpntRuu97GZ4GFseATFePvapKCIJmBC8WFszd9
