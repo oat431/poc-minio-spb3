@@ -83,6 +83,23 @@ public class CloudStorageHelper {
         return minioClient.getPresignedObjectUrl(purl);
     }
 
+    public ImageMetadataDto getMetadata(String filename, String bucketName) {
+        try {
+            StatObjectResponse stat = getStatusObject(filename, bucketName);
+            String preSignedUrl = generatePreSignedUrl(filename, bucketName);
+            return new ImageMetadataDto(
+                    preSignedUrl,
+                    filename,
+                    stat.lastModified().toEpochSecond(),
+                    stat.size(),
+                    stat.contentType()
+            );
+        } catch (Exception e) {
+            log.error("Error while getting metadata: {}", e.getMessage());
+            throw new RuntimeException("Error while getting metadata: " + e.getMessage());
+        }
+    }
+
 }
 
 

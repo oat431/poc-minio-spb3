@@ -1,6 +1,7 @@
 package panomete.pocminsb.item.payload.response;
 
 import io.swagger.v3.oas.annotations.media.Schema;
+import panomete.pocminsb.minio.dto.ImageMetadataDto;
 
 import java.time.LocalDateTime;
 import java.util.UUID;
@@ -48,7 +49,7 @@ public record ItemDto (
                 example = "https://example.com/scissors.jpg",
                 requiredMode = Schema.RequiredMode.REQUIRED
         )
-        String image,
+        ImageMetadataDto imageMetadata,
 
         @Schema(
                 name = "createdAt",
