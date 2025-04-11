@@ -17,7 +17,7 @@ public class CloudStorageHelper {
     private final MinioClient minioClient;
     public void checkService() {
         try {
-            boolean isRunning = minioClient.bucketExists(BucketExistsArgs.builder().bucket("test-bucket").build());
+            boolean isRunning = minioClient.bucketExists(BucketExistsArgs.builder().bucket("panomete-storage").build());
             if (isRunning) {
                 log.info("Minio service is running");
             } else {
@@ -67,7 +67,7 @@ public class CloudStorageHelper {
 
     public StatObjectResponse getStatusObject(String filename,String bucketName) throws Exception {
         StatObjectArgs statObjectArgs = StatObjectArgs.builder()
-                .bucket("test-bucket")
+                .bucket("panomete-storage")
                 .object(filename)
                 .build();
         return minioClient.statObject(statObjectArgs);
@@ -76,7 +76,7 @@ public class CloudStorageHelper {
     public String generatePreSignedUrl(String filename,String bucketName) throws Exception {
         GetPresignedObjectUrlArgs purl = GetPresignedObjectUrlArgs.builder()
                 .method(Method.GET)
-                .bucket("test-bucket")
+                .bucket("panomete-storage")
                 .object(filename)
                 .expiry(60 * 60 * 24)
                 .build();

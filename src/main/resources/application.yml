@@ -16,7 +16,7 @@ spring:
     driver-class-name: org.postgresql.Driver
   jpa:
     hibernate:
-      ddl-auto: update
+      ddl-auto: create
     database: postgresql
     open-in-view: false
   servlet:
@@ -54,5 +54,5 @@ logging:
 
 minio:
   host: http://localhost:9000
-  access-key: tnlNFqypgJGKzOA5Wxzd
-  secret-key: mfCpntRuu97GZ4GFseATFePvapKCIJmBC8WFszd9
+  access-key: YZxGir74AmKDzdZQM53h
+  secret-key: oJD4IR98XcekqbgmKCQh26M9LCJJYWJ7O24A63Sw

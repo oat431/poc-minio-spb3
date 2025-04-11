@@ -49,7 +49,7 @@ public class DevController {
              )
              @RequestPart("file") MultipartFile file
     ) {
-        ImageMetadataDto url = cloudStorageHelper.uploadFile(file, "test-bucket");
+        ImageMetadataDto url = cloudStorageHelper.uploadFile(file, "panomete-storage");
         return new ResponseEntity<>(url, HttpStatus.CREATED);
     }
 
