@@ -149,7 +149,7 @@ public class ItemController {
                 item.getName(),
                 item.getDescription(),
                 item.getPrice().toString(),
-                cloudStorageHelper.getMetadata(item.getImage(), "test-bucket"),
+                cloudStorageHelper.getMetadata(item.getImage(), "panomete-storage"),
                 item.getCreatedAt(),
                 item.getUpdatedAt(),
                 item.getVersion()

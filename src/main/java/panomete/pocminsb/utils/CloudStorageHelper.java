@@ -4,11 +4,14 @@ import io.minio.*;
 import io.minio.http.Method;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.core.io.InputStreamResource;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import panomete.pocminsb.minio.dto.ImageMetadataDto;
 
+import java.io.InputStream;
 import java.util.Objects;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 @Slf4j
 @Service
@@ -87,6 +90,16 @@ public class CloudStorageHelper {
         try {
             StatObjectResponse stat = getStatusObject(filename, bucketName);
             String preSignedUrl = generatePreSignedUrl(filename, bucketName);
+            if(stat.contentType().equals("application/pdf")) {
+                String homeURL = ServletUriComponentsBuilder.fromCurrentContextPath().toUriString();
+                return new ImageMetadataDto(
+                        homeURL + "/pdf/" + filename,
+                        filename,
+                        stat.lastModified().toEpochSecond(),
+                        stat.size(),
+                        stat.contentType()
+                );
+            }
             return new ImageMetadataDto(
                     preSignedUrl,
                     filename,
@@ -96,6 +109,19 @@ public class CloudStorageHelper {
             );
         } catch (Exception e) {
             log.error("Error while getting metadata: {}", e.getMessage());
+            throw new RuntimeException("Error while getting metadata: " + e.getMessage());
+        }
+    }
+
+    public InputStream getPdfMetadata(String filename) {
+        try{
+            return minioClient.getObject(
+                    GetObjectArgs.builder()
+                            .bucket("panomete-storage")
+                            .object(filename)
+                            .build()
+            );
+        } catch (Exception e) {
             throw new RuntimeException("Error while getting metadata: " + e.getMessage());
         }
     }
